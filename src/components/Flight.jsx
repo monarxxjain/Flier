@@ -32,11 +32,11 @@ const Flight = () => {
   const flightNo = useSelector((state) => state.flightNo.flightNoArray)
   const { minPrice, maxPrice } = useSelector((state) => state.priceFilter.priceFilter);
 
-  useEffect(() => {
-    if (finalarray.length !== 0) {
-      dispatch(updateMinPrice(finalarray[0]?.ProductBrandOffering[0].BestCombinablePrice.TotalPrice))
-    }
-  }, [finalarray])
+  // useEffect(() => {
+  //   if (finalarray.length !== 0) {
+  //     dispatch(updateMinPrice(finalarray[0]?.ProductBrandOffering[0].BestCombinablePrice.TotalPrice))
+  //   }
+  // }, [finalarray])
 
   useEffect(() => {
     if (displayArray.length !== 0) {
@@ -44,6 +44,7 @@ const Flight = () => {
       newArr.sort(GetPriceSort());
       const constMaxt = newArr[newArr.length - 1]?.ProductBrandOffering[0].BestCombinablePrice.TotalPrice
       if(constMaxt!=null && constMaxt!=undefined){
+        dispatch(updateMinPrice(newArr[0]?.ProductBrandOffering[0].BestCombinablePrice.TotalPrice))
         dispatch(updateAbsoluteMaxPrice(constMaxt));
       }
     }
