@@ -1,9 +1,10 @@
 import React from 'react'
+import X from "../../data1.json";
 import SingleOffering from './SingleOffering';
 import FlightDetails from './FlightDetails';
 import { useSelector } from 'react-redux';
 
-const AllOffering = ({  showDetails, openAccordian, X }) => {
+const AllOffering = ({  showDetails, openAccordian}) => {
   const departureFrom =X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Departure;
   const arrivalTo =X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Arrival;
   const alldata = X.CatalogProductOfferingsResponse;

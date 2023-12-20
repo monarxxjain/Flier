@@ -71,18 +71,18 @@ const MultiCitySearch = () => {
             // flex flex-wrap lg:flex-nowrap gap-x-10 gap-y-4 lg:gap-10 lg:justify-center
             <div key={index} className="grid grid-cols-2 md:grid-cols-5 gap-2">
               <select name="Departure" onChange={(event) => handleFormChange(event, index)} value={form.Departure} className="px-2 flex-1 py-1 rounded-md bg-slate-200 min-w-[130px]">
-                {departureArray.map((item,id) => {
+                {departureArray.map((item) => {
                   return (
-                    <option key={id} value={item}>
+                    <option key={item} value={item}>
                       {item}
                     </option>
                   );
                 })}
               </select>
               <select name="Arrival" onChange={(event) => handleFormChange(event, index)} value={form.Arrival} className="px-2 flex-1 py-1 rounded-md bg-slate-200 min-w-[130px]">
-                {arrivalArray.map((item,id) => {
+                {arrivalArray.map((item) => {
                   return (
-                    <option key={id} value={item}>
+                    <option key={item} value={item}>
                       {item}
                     </option>
                   );

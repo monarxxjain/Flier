@@ -34,10 +34,10 @@ const FlightDetails = ({item, dup, alldata}) => {
             {item.flightRefs.map((alp, index) => {
               return (
                 <div key={index} className='flex gap-[5px] flex-wrap sm:flex-nowrap'>
-                  {alldata.ReferenceList[0].Flight.map((y,inde) => {
+                  {alldata.ReferenceList[0].Flight.map((y) => {
                     if (y.id === alp) {
                       return (
-                        <div key={inde} className="flex gap-y-1 gap-x-5 flex-wrap sm:flex-nowrap">
+                        <div className="flex gap-y-1 gap-x-5 flex-wrap sm:flex-nowrap">
                           <p><span className='font-bold'>  From -{" "}</span>{" "}{y.Departure.location}</p>
                           <p><span className='font-bold'>  To -{" "}</span>{" "}{y.Arrival.location}</p>
                           <p><span className='font-bold'>  Duration -{" "}</span>{" "}{y.duration}</p>
@@ -55,9 +55,9 @@ const FlightDetails = ({item, dup, alldata}) => {
                     <p><span className='font-bold'>Departure Date - </span>{item.DepartureTime}</p>
                     <p><span className='font-bold'>Arrival Date - </span>{item.ArrivalTime}</p>
                 </div>
-                {item.ProductBrandOffering.map((x,i) => {
+                {item.ProductBrandOffering.map((x) => {
                 return (
-                    <div key={i} className='flex flex-col gap-[5px]'>
+                    <div className='flex flex-col gap-[5px]'>
                     <div>
                         <span className='font-bold'>Brand Name -{" "}</span>
                         <span>
@@ -130,13 +130,13 @@ const FlightDetails = ({item, dup, alldata}) => {
         </div>
         <div className="p-5 flex flex-col gap-5">
             <div className='flex flex-col gap-10 sm:gap-[5px]'>
-            {dup.flightRefs.map((alp, x) => {
+            {dup.flightRefs.map((alp) => {
               return (
-                <div key={x} className='flex gap-[5px] flex-wrap sm:flex-nowrap'>
-                  {alldata.ReferenceList[0].Flight.map((y,ix) => {
+                <div className='flex gap-[5px] flex-wrap sm:flex-nowrap'>
+                  {alldata.ReferenceList[0].Flight.map((y) => {
                     if (y.id === alp) {
                       return (
-                        <div key={ix} className="flex gap-y-1 gap-x-5 flex-wrap sm:flex-nowrap">
+                        <div className="flex gap-y-1 gap-x-5 flex-wrap sm:flex-nowrap">
                           <p><span className='font-bold'>From -{" "}</span>{" "}{y.Departure.location}</p>
                           <p><span className='font-bold'>To -{" "}</span>{" "}{y.Arrival.location}</p>
                           <p><span className='font-bold'>Duration -{" "}</span>{" "}{y.duration}</p>
@@ -154,9 +154,9 @@ const FlightDetails = ({item, dup, alldata}) => {
                   <p><span className='font-bold'>Departure Date - </span>{dup.DepartureTime}</p>
                   <p><span className='font-bold'>Arrival Date - </span>{dup.ArrivalTime}</p>
                 </div>
-                {dup.ProductBrandOffering.map((x,j) => {
+                {dup.ProductBrandOffering.map((x) => {
                 return (
-                    <div key={j} className='flex flex-col gap-[5px]'>
+                    <div className='flex flex-col gap-[5px]'>
                     <div>
                         <span className='font-bold'>Brand Name -{" "}</span>
                         <span>
