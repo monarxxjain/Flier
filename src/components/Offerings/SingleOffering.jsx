@@ -18,7 +18,7 @@ const SingleOffering = ({returnBack, departureFrom, arrivalTo, item, alldata}) =
           </div>
           <div><span className='font-bold'>No. of stops -</span> {item.flightRefs.length}</div>
           <div>
-            {item.ProductBrandOffering.map((x) => {
+            {item.ProductBrandOffering.map((ProductDetail) => {
               return (
                 <div className='flex flex-col gap-[5px]'>
                   <div>
@@ -26,7 +26,7 @@ const SingleOffering = ({returnBack, departureFrom, arrivalTo, item, alldata}) =
                       Total Duration -{" "}
                     </span>
                     <span>
-                      {x.Product.map((aa) => {
+                      {ProductDetail.Product.map((aa) => {
                         return alldata.ReferenceList[1].Product.map((y) => {
                           if (y.id === aa?.productRef) {
                             return y.totalDuration;

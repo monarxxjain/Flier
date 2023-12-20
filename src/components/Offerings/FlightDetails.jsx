@@ -1,6 +1,6 @@
 import React from "react";
 
-const FlightDetails = ({item, dup, alldata}) => {
+const FlightDetails = ({item, ReturnDetails, alldata}) => {
   return (
     <div className="bg-[#f5f6f8] rounded-xl p-10 flex flex-col gap-5">
         {/* Departure */}
@@ -105,11 +105,11 @@ const FlightDetails = ({item, dup, alldata}) => {
       </div>
 
         {/* Arrival */}
-      {dup && <div className="bg-white shadow-sm rounded-xl">
+      {ReturnDetails && <div className="bg-white shadow-sm rounded-xl">
         <div className="flex p-5 justify-between border-b border-slate-300">
           <div><span className="font-medium">Arrival •</span><span>--Arrival Date--</span></div>
           <div>
-            {dup.ProductBrandOffering.map((x) => {
+            {ReturnDetails.ProductBrandOffering.map((x) => {
               return (
                 <div className="flex flex-col gap-[5px]">
                   <div>
@@ -130,7 +130,7 @@ const FlightDetails = ({item, dup, alldata}) => {
         </div>
         <div className="p-5 flex flex-col gap-5">
             <div className='flex flex-col gap-10 sm:gap-[5px]'>
-            {dup.flightRefs.map((alp) => {
+            {ReturnDetails.flightRefs.map((alp) => {
               return (
                 <div className='flex gap-[5px] flex-wrap sm:flex-nowrap'>
                   {alldata.ReferenceList[0].Flight.map((y) => {
@@ -151,10 +151,10 @@ const FlightDetails = ({item, dup, alldata}) => {
             </div>
             <div className="flex flex-col gap-5">
                 <div>
-                  <p><span className='font-bold'>Departure Date - </span>{dup.DepartureTime}</p>
-                  <p><span className='font-bold'>Arrival Date - </span>{dup.ArrivalTime}</p>
+                  <p><span className='font-bold'>Departure Date - </span>{ReturnDetails.DepartureTime}</p>
+                  <p><span className='font-bold'>Arrival Date - </span>{ReturnDetails.ArrivalTime}</p>
                 </div>
-                {dup.ProductBrandOffering.map((x) => {
+                {ReturnDetails.ProductBrandOffering.map((x) => {
                 return (
                     <div className='flex flex-col gap-[5px]'>
                     <div>

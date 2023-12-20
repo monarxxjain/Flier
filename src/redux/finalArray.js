@@ -14,28 +14,27 @@ alldata.CatalogProductOfferings.CatalogProductOffering.forEach((item) => {
 });
 const tempDestinationFlights = JSON.parse(JSON.stringify(actualDestinations));
 tempDestinationFlights.map((item) => {
-  let ffr;
-  let lfr;
-  item.ProductBrandOptions.map((f, k) => {
-    ffr = alldata.ReferenceList[0].Flight.filter((it) => {
-      return it.id === f.flightRefs[0];
+  let First;
+  let Last;
+  item.ProductBrandOptions.map((flight, k) => {
+    First = alldata.ReferenceList[0].Flight.filter((it) => {
+      return it.id === flight.flightRefs[0];
     });
-    lfr = alldata.ReferenceList[0].Flight.filter((it) => {
-      return it.id === f.flightRefs[f.flightRefs.length - 1];
+    Last = alldata.ReferenceList[0].Flight.filter((it) => {
+      return it.id === flight.flightRefs[flight.flightRefs.length - 1];
     });
-    f.DepartureTime = ffr[0].Departure.date;
-    f.ArrivalTime = lfr[0].Arrival.date;
-    let alp = f.ProductBrandOffering.map((it) => {
-      let g = JSON.stringify(f);
-      g = JSON.parse(g);
-      g.ProductBrandOffering = [];
-      g.ProductBrandOffering.push(it);
-      return g;
+    flight.DepartureTime = First[0].Departure.date;
+    flight.ArrivalTime = Last[0].Arrival.date;
+    let alp = flight.ProductBrandOffering.map((it) => {
+      let DeepFlight = JSON.stringify(flight);
+      DeepFlight = JSON.parse(DeepFlight);
+      DeepFlight.ProductBrandOffering = [];
+      DeepFlight.ProductBrandOffering.push(it);
+      return DeepFlight;
     });
     initialFinalArray=[...initialFinalArray,...alp];
   });
 });
-console.log('initialFinalArray ',initialFinalArray);
 
 const initialState = {
   finalArray: [...initialFinalArray],

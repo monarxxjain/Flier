@@ -16,26 +16,26 @@ alldata.CatalogProductOfferings.CatalogProductOffering.forEach((item) => {
 
 const tempReturnFlight = JSON.parse(JSON.stringify(returnFlights));
 tempReturnFlight.map((item) => {
-  let ffr;
-  let lfr;
+  let First;
+  let Last;
 
   // Iterate through each ProductBrandOption in the return flight
-  item.ProductBrandOptions.map((f, k) => {
+  item.ProductBrandOptions.map((flight, k) => {
     // Retrieve flight information for the first and last flight reference
-    ffr = alldata.ReferenceList[0].Flight.filter((it) => {
-      return it.id === f.flightRefs[0];
+    First = alldata.ReferenceList[0].Flight.filter((it) => {
+      return it.id === flight.flightRefs[0];
     });
-    lfr = alldata.ReferenceList[0].Flight.filter((it) => {
-      return it.id === f.flightRefs[f.flightRefs.length - 1];
+    Last = alldata.ReferenceList[0].Flight.filter((it) => {
+      return it.id === flight.flightRefs[flight.flightRefs.length - 1];
     });
 
     // Update departure and arrival times in the ProductBrandOption 
-    f.DepartureTime = ffr[0].Departure.date;
-    f.ArrivalTime = lfr[0].Arrival.date;
+    flight.DepartureTime = First[0].Departure.date;
+    flight.ArrivalTime = Last[0].Arrival.date;
 
     // Create a modified copy of the ProductBrandOption with only one ProductBrandOffering
-    let alp = f.ProductBrandOffering.map((it) => {
-      let g = JSON.stringify(f);
+    let alp = flight.ProductBrandOffering.map((it) => {
+      let g = JSON.stringify(flight);
       g = JSON.parse(g);
       g.ProductBrandOffering = [];
       g.ProductBrandOffering.push(it);

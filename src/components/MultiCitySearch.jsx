@@ -11,19 +11,18 @@ const MultiCitySearch = () => {
 
   function fetchData() {
     const normaldata = X.CatalogProductOfferingsResponse;
-    let a = [];
-    let b = [];
+    let TempArrayA = [];
+    let TempArrayB = [];
     normaldata.ReferenceList[0].Flight.forEach((i) => {
-      if (!a.includes(i.Departure.location)) {
-        a.push(i.Departure.location);
+      if (!TempArrayA.includes(i.Departure.location)) {
+        TempArrayA.push(i.Departure.location);
       }
-      if (!b.includes(i.Arrival.location)) {
-        b.push(i.Arrival.location);
+      if (!TempArrayB.includes(i.Arrival.location)) {
+        TempArrayB.push(i.Arrival.location);
       }
     });
-    console.log(a);
-    setarrivalArray(b);
-    setdepartureArray(a);
+    setarrivalArray(TempArrayB);
+    setdepartureArray(TempArrayA);
   }
 
   useEffect(() => {

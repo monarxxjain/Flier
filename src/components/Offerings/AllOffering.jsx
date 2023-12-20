@@ -31,9 +31,9 @@ const AllOffering = ({  showDetails, openAccordian}) => {
                   {/* Return Flight */}
                   <div className="flex gap-2">
                     <div>
-                      {finalArrayDup.map((dup, id) => {
+                      {finalArrayDup.map((duplicateItem, id) => {
                         if (!conditionMet &&
-                          dup.ProductBrandOffering[0].CombinabilityCode[0] ===
+                          duplicateItem.ProductBrandOffering[0].CombinabilityCode[0] ===
                           item.ProductBrandOffering[0].CombinabilityCode[0]
                         ) {
                           conditionMet = true;
@@ -41,7 +41,7 @@ const AllOffering = ({  showDetails, openAccordian}) => {
                           return (
                             <div key={id} className='flex gap-2'>
                               <input type="checkbox" />
-                              <SingleOffering returnBack={true} departureFrom={departureFrom} arrivalTo={arrivalTo} item={dup} alldata={alldata} />
+                              <SingleOffering returnBack={true} departureFrom={departureFrom} arrivalTo={arrivalTo} item={duplicateItem} alldata={alldata} />
                             </div>
                           );
                         }
@@ -70,18 +70,18 @@ const AllOffering = ({  showDetails, openAccordian}) => {
               </div>
 
               {/* Details Inside Accordian */}
-              {finalArrayDup.map((dup, ind) => {
+              {finalArrayDup.map((duplicateItem) => {
                 if (!conditionMet1 &&
-                  dup.ProductBrandOffering[0].CombinabilityCode[0] ===
+                  duplicateItem.ProductBrandOffering[0].CombinabilityCode[0] ===
                   item.ProductBrandOffering[0].CombinabilityCode[0]
                 ) {
                   conditionMet1 = true;
-                  returnDetails = dup;
+                  returnDetails = duplicateItem;
                 }
               })}
 
               { showDetails === id && (
-              <FlightDetails item={item} dup={returnDetails} alldata={alldata}
+              <FlightDetails item={item} ReturnDetails={returnDetails} alldata={alldata}
               />)}
             </section>
           </main>
