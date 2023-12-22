@@ -10,7 +10,7 @@ const AllOffering = ({  showDetails, openAccordian}) => {
   const alldata = X.CatalogProductOfferingsResponse;
   const returnOfferingsList = useSelector((state) => state.finalArrayDup.finalArrayDup);
   const departureOfferingsList = useSelector((state) => state.finalArray.finalArray);
-
+  console.log(departureOfferingsList)
   return (
     <div className="flex flex-col gap-4 my-10">
       {departureOfferingsList.map((deptOffering, id) => {
@@ -76,6 +76,23 @@ const AllOffering = ({  showDetails, openAccordian}) => {
           </main>
         );
       })}
+
+      {departureOfferingsList.length==0 && 
+        <section className="shadow-md mx-5 xl:mx-0 bg-white border border-white rounded-xl hover:border-slate-500 transition-all cursor-pointer">
+          {/* Closed Accordian */}
+          <div className={`flex flex-col sm:flex-row justify-around `} >
+            <div className="flex flex-col text-center xl:px-40 2xl:px-52 py-10 font-bold text-5xl whitespace-nowrap md:text-7xl justify-center" >
+              No Offerings 
+            </div>
+
+
+            
+          </div>
+
+          
+         
+        </section>
+      }
     </div>
   )
 }

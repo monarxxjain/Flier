@@ -20,7 +20,6 @@ const AirlineFilter = () => {
             <h3 className="text-xl">Flights Name :</h3>
             <div className="flex flex-col gap-2">
                 {allAirlines.map((airline, key) => {
-                    console.log(airline)
                     return (
                         <div key={key} className="flex gap-3">
                             {selectedAirline.includes(airline) === true ? (

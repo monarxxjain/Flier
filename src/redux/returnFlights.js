@@ -10,7 +10,6 @@ alldata.CatalogProductOfferings.CatalogProductOffering.forEach((item) => {
     actualReturns.push(item);
   }
 });
-console.log('actual returns ',actualReturns);
 const initialState = {
   returnFlightsArray: [...actualReturns],
 }
