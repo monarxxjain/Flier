@@ -5,6 +5,7 @@ import { updateMaxPrice } from '../../redux/priceFilter';
 const PriceFilter = () => {
   const dispatch = useDispatch();
   const {minPrice,maxPrice,absoluteMaxPrice}=useSelector((state)=>state.priceFilter.priceFilter);
+  
   const handlePriceRangeChange = (event) => {
     dispatch(updateMaxPrice(+event.target.value));
   };

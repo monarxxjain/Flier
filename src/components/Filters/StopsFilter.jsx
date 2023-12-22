@@ -4,40 +4,33 @@ import { addflightNo, removeflightNo } from "../../redux/flightNo";
 
 const StopsFilter = () => {
   const dispatch = useDispatch();
-  const flightNo = useSelector((state) => state.flightNo.flightNoArray)
+  const selectedNoOfStops = useSelector((state) => state.flightNo.flightNoArray)
   const stops = [1, 2, 3];
+
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      dispatch(addflightNo(+e.target.value));
+    } else {
+      dispatch(removeflightNo(+e.target.value));
+    }
+  }
+
   return (
     <div className="flex flex-col gap-3 flex-1  min-w-[120px]">
       <h3 className="text-xl">No. of Stops :</h3>
       <div className="flex flex-col gap-1">
-        {stops.map((item, key) => {
+        {stops.map((noOfStops, key) => {
           return (
             <div key={key} className="flex gap-3">
-              {flightNo.includes(item) === true ? (
-                <input type="checkbox" id={item + "stop"} value={item} checked={true}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      dispatch(addflightNo(+e.target.value));
-                    } else {
-                      dispatch(removeflightNo(+e.target.value));
-                    }
-                  }}
-                />
+              {selectedNoOfStops.includes(noOfStops) === true ? (
+                <input type="checkbox" id={noOfStops + "stop"} value={noOfStops} checked={true} onChange={(e) => handleChange(e)} />
               ) : (
-                <input type="checkbox" value={item} id={item + "stop"}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      dispatch(addflightNo(+e.target.value));
-                    } else {
-                      dispatch(removeflightNo(+e.target.value));
-                    }
-                  }}
-                />
+                <input type="checkbox" value={noOfStops} id={noOfStops + "stop"} onChange={(e) => handleChange(e)} />
               )}
-              {item >= 3 ? (
-                <label htmlFor={item + "stop"}>2+</label>
+              {noOfStops >= 3 ? (
+                <label htmlFor={noOfStops + "stop"}>2+</label>
               ) : (
-                <label htmlFor={item + "stop"}>{item}</label>
+                <label htmlFor={noOfStops + "stop"}>{noOfStops}</label>
               )}
             </div>
           );

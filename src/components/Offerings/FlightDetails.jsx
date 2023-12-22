@@ -1,6 +1,42 @@
 import React from "react";
 
-const FlightDetails = ({item, ReturnDetails, alldata}) => {
+const FlightDetails = ({DeptDetails, ReturnDetails, alldata}) => {
+
+  const extractTotalDuration = (productBrandOffering) => {
+    const totalDuration = productBrandOffering.Product.map((product) => {
+      return alldata.ReferenceList[1].Product.map((referenceListProduct) => {
+        if (referenceListProduct.id === product?.productRef) {
+          return referenceListProduct.totalDuration;
+        }
+      });
+    })
+    return totalDuration
+  }
+
+
+  const extractBrandName = (productBrandOffering) => {
+    const brandName = alldata.ReferenceList[3].Brand.map((brand) => {
+      if (brand.id === productBrandOffering?.Brand?.BrandRef) {
+        return brand.name;
+      }
+    })
+    return brandName
+  }
+
+
+  const extractValidatingAirline = (productBrandOffering) => {
+    const validatingAirline = alldata.ReferenceList[2].TermsAndConditions.map(
+      (tNc) => {
+      if ( tNc.id === productBrandOffering.TermsAndConditions?.termsAndConditionsRef ) {
+          return tNc.ValidatingAirline.map((validatingAirline) => {
+            return validatingAirline.ValidatingAirline;
+          });
+        }
+      }
+    )
+    return validatingAirline
+  }
+
   return (
     <div className="bg-[#f5f6f8] rounded-xl p-10 flex flex-col gap-5">
         {/* Departure */}
@@ -10,18 +46,13 @@ const FlightDetails = ({item, ReturnDetails, alldata}) => {
             <span className="font-medium">Depart •</span><span>--Departure Date--</span>
           </div>
           <div>
-            {item.ProductBrandOffering.map((x,index) => {
+            {DeptDetails.ProductBrandOffering.map((productBrandOffering, index) => {
+              const totalDuration = extractTotalDuration(productBrandOffering)
               return (
                 <div key={index} className="flex flex-col gap-[5px]">
                   <div>
                     <span>
-                      {x.Product.map((aa,id) => {
-                        return alldata.ReferenceList[1].Product.map((y, ind) => {
-                          if (y.id === aa?.productRef) {
-                            return y.totalDuration;
-                          }
-                        });
-                      })}
+                      {totalDuration}
                     </span>
                   </div>
                 </div>
@@ -31,17 +62,17 @@ const FlightDetails = ({item, ReturnDetails, alldata}) => {
         </div>
         <div className="p-5 flex flex-col gap-5">
             <div className='flex flex-col gap-10 sm:gap-[5px]'>
-            {item.flightRefs.map((alp, index) => {
+            {DeptDetails.flightRefs.map((flightRef, index) => {
               return (
                 <div key={index} className='flex gap-[5px] flex-wrap sm:flex-nowrap'>
-                  {alldata.ReferenceList[0].Flight.map((y) => {
-                    if (y.id === alp) {
+                  {alldata.ReferenceList[0].Flight.map((flight) => {
+                    if (flight.id === flightRef) {
                       return (
                         <div className="flex gap-y-1 gap-x-5 flex-wrap sm:flex-nowrap">
-                          <p><span className='font-bold'>  From -{" "}</span>{" "}{y.Departure.location}</p>
-                          <p><span className='font-bold'>  To -{" "}</span>{" "}{y.Arrival.location}</p>
-                          <p><span className='font-bold'>  Duration -{" "}</span>{" "}{y.duration}</p>
-                          <p><span className='font-bold'>  AirlineCarrier -{" "}</span>{" "}{y.carrier}</p>
+                          <p><span className='font-bold'>  From -{" "}</span>{" "}{flight.Departure.location}</p>
+                          <p><span className='font-bold'>  To -{" "}</span>{" "}{flight.Arrival.location}</p>
+                          <p><span className='font-bold'>  Duration -{" "}</span>{" "}{flight.duration}</p>
+                          <p><span className='font-bold'>  AirlineCarrier -{" "}</span>{" "}{flight.carrier}</p>
                         </div>
                       );
                     }
@@ -52,53 +83,29 @@ const FlightDetails = ({item, ReturnDetails, alldata}) => {
             </div>
             <div className="flex flex-col gap-5">
                 <div>
-                    <p><span className='font-bold'>Departure Date - </span>{item.DepartureTime}</p>
-                    <p><span className='font-bold'>Arrival Date - </span>{item.ArrivalTime}</p>
+                    <p><span className='font-bold'>Departure Date - </span>{DeptDetails.DepartureTime}</p>
+                    <p><span className='font-bold'>Arrival Date - </span>{DeptDetails.ArrivalTime}</p>
                 </div>
-                {item.ProductBrandOffering.map((x) => {
-                return (
-                    <div className='flex flex-col gap-[5px]'>
-                    <div>
-                        <span className='font-bold'>Brand Name -{" "}</span>
-                        <span>
-                          {alldata.ReferenceList[3].Brand.map((y) => {
-                              if (y.id === x?.Brand?.BrandRef) {
-                              return y.name;
-                              }
-                          })}
-                        </span>
-                        <p><span className='italic'>Base Price -{" "}</span>{x.Price.Base}</p>
-                        <p><span className='italic'>Total Taxes-{" "}</span>{x.Price.TotalTaxes}</p>
-                        <p><span className='italic'>Total Price -{" "}</span>{x.Price.TotalPrice}</p>
+                {DeptDetails.ProductBrandOffering.map((productBrandOffering, index) => {
+                  const brandName = extractBrandName(productBrandOffering)
+                  const validatingAirline = extractValidatingAirline(productBrandOffering)
+                  return (
+                    <div key={index} className='flex flex-col gap-[5px]'>
+                      <div>
+                          <span className='font-bold'>Brand Name -{" "}</span><span>{brandName}</span>
+
+                          <p><span className='italic'>Base Price -{" "}</span>{productBrandOffering.Price.Base}</p>
+                          <p><span className='italic'>Total Taxes-{" "}</span>{productBrandOffering.Price.TotalTaxes}</p>
+                          <p><span className='italic'>Total Price -{" "}</span>{productBrandOffering.Price.TotalPrice}</p>
+                      </div>
+                      <div>
+                          <span className='font-bold'>Validating Airlines -{" "}</span>
+                          <span>
+                            {validatingAirline}
+                          </span>
+                      </div>
                     </div>
-                    <div>
-                        <span className='font-bold'>Total Duration -{" "}</span>
-                        <span>
-                          {x.Product.map((aa) => {
-                              return alldata.ReferenceList[1].Product.map((y) => {
-                              if (y.id === aa?.productRef) {
-                                  return y.totalDuration;
-                              }
-                              });
-                          })}
-                        </span>
-                    </div>
-                    <div>
-                        <span className='font-bold'>Validating Airlines -{" "}</span>
-                        <span>
-                          {alldata.ReferenceList[2].TermsAndConditions.map(
-                              (y) => {
-                              if ( y.id === x.TermsAndConditions?.termsAndConditionsRef ) {
-                                  return y.ValidatingAirline.map((air) => {
-                                  return air.ValidatingAirline;
-                                  });
-                                }
-                              }
-                          )}
-                        </span>
-                    </div>
-                    </div>
-                );
+                  );
                 })}
           </div>
         </div>
@@ -109,18 +116,13 @@ const FlightDetails = ({item, ReturnDetails, alldata}) => {
         <div className="flex p-5 justify-between border-b border-slate-300">
           <div><span className="font-medium">Arrival •</span><span>--Arrival Date--</span></div>
           <div>
-            {ReturnDetails.ProductBrandOffering.map((x) => {
+            {ReturnDetails.ProductBrandOffering.map((productBrandOffering, index) => {
+              const totalDuration = extractTotalDuration(productBrandOffering)
               return (
-                <div className="flex flex-col gap-[5px]">
+                <div key={index} className="flex flex-col gap-[5px]">
                   <div>
                     <span>
-                      {x.Product.map((aa) => {
-                        return alldata.ReferenceList[1].Product.map((y) => {
-                          if (y.id === aa?.productRef) {
-                            return y.totalDuration;
-                          }
-                        });
-                      })}
+                      {totalDuration}
                     </span>
                   </div>
                 </div>
@@ -130,17 +132,17 @@ const FlightDetails = ({item, ReturnDetails, alldata}) => {
         </div>
         <div className="p-5 flex flex-col gap-5">
             <div className='flex flex-col gap-10 sm:gap-[5px]'>
-            {ReturnDetails.flightRefs.map((alp) => {
+            {ReturnDetails.flightRefs.map((flightRef) => {
               return (
                 <div className='flex gap-[5px] flex-wrap sm:flex-nowrap'>
-                  {alldata.ReferenceList[0].Flight.map((y) => {
-                    if (y.id === alp) {
+                  {alldata.ReferenceList[0].Flight.map((flight) => {
+                    if (flight.id === flightRef) {
                       return (
                         <div className="flex gap-y-1 gap-x-5 flex-wrap sm:flex-nowrap">
-                          <p><span className='font-bold'>From -{" "}</span>{" "}{y.Departure.location}</p>
-                          <p><span className='font-bold'>To -{" "}</span>{" "}{y.Arrival.location}</p>
-                          <p><span className='font-bold'>Duration -{" "}</span>{" "}{y.duration}</p>
-                          <p><span className='font-bold'>AirlineCarrier -{" "}</span>{" "}{y.carrier}</p>
+                          <p><span className='font-bold'>From -{" "}</span>{" "}{flight.Departure.location}</p>
+                          <p><span className='font-bold'>To -{" "}</span>{" "}{flight.Arrival.location}</p>
+                          <p><span className='font-bold'>Duration -{" "}</span>{" "}{flight.duration}</p>
+                          <p><span className='font-bold'>AirlineCarrier -{" "}</span>{" "}{flight.carrier}</p>
                         </div>
                       );
                     }
@@ -154,50 +156,28 @@ const FlightDetails = ({item, ReturnDetails, alldata}) => {
                   <p><span className='font-bold'>Departure Date - </span>{ReturnDetails.DepartureTime}</p>
                   <p><span className='font-bold'>Arrival Date - </span>{ReturnDetails.ArrivalTime}</p>
                 </div>
-                {ReturnDetails.ProductBrandOffering.map((x) => {
-                return (
-                    <div className='flex flex-col gap-[5px]'>
-                    <div>
-                        <span className='font-bold'>Brand Name -{" "}</span>
-                        <span>
-                          {alldata.ReferenceList[3].Brand.map((y) => {
-                              if (y.id === x?.Brand?.BrandRef) {
-                              return y.name;
-                              }
-                          })}
-                        </span>
-                        <p><span className='italic'>Base Price -{" "}</span>{x.Price.Base}</p>
-                        <p><span className='italic'>Total Taxes-{" "}</span>{x.Price.TotalTaxes}</p>
-                        <p><span className='italic'>Total Price -{" "}</span>{x.Price.TotalPrice}</p>
+                {ReturnDetails.ProductBrandOffering.map((productBrandOffering, index) => {
+                  const brandName = extractBrandName(productBrandOffering)
+                  const validatingAirline = extractValidatingAirline(productBrandOffering)
+                  return (
+                    <div key={index} className='flex flex-col gap-[5px]'>
+                      <div>
+                          <span className='font-bold'>Brand Name -{" "}</span>
+                          <span>
+                            {brandName}
+                          </span>
+                          <p><span className='italic'>Base Price -{" "}</span>{productBrandOffering.Price.Base}</p>
+                          <p><span className='italic'>Total Taxes-{" "}</span>{productBrandOffering.Price.TotalTaxes}</p>
+                          <p><span className='italic'>Total Price -{" "}</span>{productBrandOffering.Price.TotalPrice}</p>
+                      </div>
+                      <div>
+                          <span className='font-bold'>Validating Airlines -{" "}</span>
+                          <span>
+                            {validatingAirline}
+                          </span>
+                      </div>
                     </div>
-                    <div>
-                        <span className='font-bold'>Total Duration -{" "}</span>
-                        <span>
-                          {x.Product.map((aa) => {
-                              return alldata.ReferenceList[1].Product.map((y) => {
-                              if (y.id === aa?.productRef) {
-                                  return y.totalDuration;
-                              }
-                              });
-                          })}
-                        </span>
-                    </div>
-                    <div>
-                        <span className='font-bold'>Validating Airlines -{" "}</span>
-                        <span>
-                          {alldata.ReferenceList[2].TermsAndConditions.map(
-                              (y) => {
-                              if ( y.id === x.TermsAndConditions?.termsAndConditionsRef ) {
-                                  return y.ValidatingAirline.map((air) => {
-                                  return air.ValidatingAirline;
-                                  });
-                              }
-                              }
-                          )}
-                        </span>
-                    </div>
-                  </div>
-                );
+                  );
                 })}
             </div>
         </div>

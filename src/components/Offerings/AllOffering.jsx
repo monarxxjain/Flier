@@ -8,14 +8,18 @@ const AllOffering = ({  showDetails, openAccordian}) => {
   const departureFrom =X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Departure;
   const arrivalTo =X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Arrival;
   const alldata = X.CatalogProductOfferingsResponse;
-  const finalArrayDup = useSelector((state) => state.finalArrayDup.finalArrayDup);
-  const finalarray = useSelector((state) => state.finalArray.finalArray);
+  const returnOfferingsList = useSelector((state) => state.finalArrayDup.finalArrayDup);
+  const departureOfferingsList = useSelector((state) => state.finalArray.finalArray);
+
   return (
     <div className="flex flex-col gap-4 my-10">
-      {finalarray.map((item, id) => {
-        let conditionMet = false;
-        let conditionMet1 = false;
+      {departureOfferingsList.map((deptOffering, id) => {
         let returnDetails;
+        returnOfferingsList.map((returnOffering) => {
+          if ( returnOffering.ProductBrandOffering[0].CombinabilityCode[0] === deptOffering.ProductBrandOffering[0].CombinabilityCode[0]){
+            returnDetails = returnOffering
+          }
+        })
         return (
           <main key={id}>
             <section className="shadow-md mx-5 xl:mx-0 bg-white border border-white rounded-xl hover:border-slate-500 transition-all cursor-pointer">
@@ -25,27 +29,21 @@ const AllOffering = ({  showDetails, openAccordian}) => {
                   {/* Destination Flight */}
                   <div className="flex gap-2">
                     <input type="checkbox" />
-                    <SingleOffering returnBack={false} departureFrom={departureFrom} arrivalTo={arrivalTo} item={item} alldata={alldata} />
+                    <SingleOffering returnBack={false} departureFrom={departureFrom} arrivalTo={arrivalTo} offering={deptOffering} alldata={alldata} />
                   </div>
 
                   {/* Return Flight */}
                   <div className="flex gap-2">
                     <div>
-                      {finalArrayDup.map((duplicateItem, id) => {
-                        if (!conditionMet &&
-                          duplicateItem.ProductBrandOffering[0].CombinabilityCode[0] ===
-                          item.ProductBrandOffering[0].CombinabilityCode[0]
-                        ) {
-                          conditionMet = true;
-
-                          return (
-                            <div key={id} className='flex gap-2'>
-                              <input type="checkbox" />
-                              <SingleOffering returnBack={true} departureFrom={departureFrom} arrivalTo={arrivalTo} item={duplicateItem} alldata={alldata} />
-                            </div>
-                          );
-                        }
-                        return null;
+                      {returnOfferingsList.map((returnOffering, id) => {
+                        return(
+                          returnOffering.ProductBrandOffering[0].CombinabilityCode[0] === deptOffering.ProductBrandOffering[0].CombinabilityCode[0] 
+                          &&
+                          <div key={id} className='flex gap-2'>
+                            <input type="checkbox" />
+                            <SingleOffering returnBack={true} departureFrom={departureFrom} arrivalTo={arrivalTo} offering={returnOffering} alldata={alldata} />
+                          </div>
+                        )
                       })}
                     </div>
                   </div>
@@ -57,10 +55,9 @@ const AllOffering = ({  showDetails, openAccordian}) => {
                 <div className="p-5">
                   Total Price :-{" "}
                   <p className="font-bold text-3xl">
-                    ${" "} {item.ProductBrandOffering[0].BestCombinablePrice.TotalPrice}
+                    ${" "} {deptOffering.ProductBrandOffering[0].BestCombinablePrice.TotalPrice}
                   </p>
                   <button
-                    // onClick={() => sortTimeAsc()}
                     className="text-white w-full mt-3 py-2 px-5 text-xl rounded active:scale-95 transition-all hover:opacity-95"
                     style={{ background: "linear-gradient(135deg,#e55e0d 0%,#cf3218 100%)", }}
                   >
@@ -69,20 +66,12 @@ const AllOffering = ({  showDetails, openAccordian}) => {
                 </div>
               </div>
 
+              
               {/* Details Inside Accordian */}
-              {finalArrayDup.map((duplicateItem) => {
-                if (!conditionMet1 &&
-                  duplicateItem.ProductBrandOffering[0].CombinabilityCode[0] ===
-                  item.ProductBrandOffering[0].CombinabilityCode[0]
-                ) {
-                  conditionMet1 = true;
-                  returnDetails = duplicateItem;
-                }
-              })}
 
-              { showDetails === id && (
-              <FlightDetails item={item} ReturnDetails={returnDetails} alldata={alldata}
-              />)}
+              { 
+                showDetails === id && <FlightDetails DeptDetails={deptOffering} ReturnDetails={returnDetails} alldata={alldata}/>
+              }
             </section>
           </main>
         );

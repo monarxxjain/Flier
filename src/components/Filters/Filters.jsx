@@ -9,8 +9,6 @@ import { clearfn } from "../Utils/UtilityFunctions";
 
 const Filters = () => {
   const dispatch = useDispatch();
-  const allBrands = useSelector((state) => state.allBrandsArray.allBrandsArray)
-  const allFlights = useSelector((state) => state.allFlightsArray.allFlightsArray)
   const displayArray = useSelector((state) => state.displayArray.displayArray)
   const {absoluteMaxPrice}=useSelector((state)=>state.priceFilter.priceFilter);
   

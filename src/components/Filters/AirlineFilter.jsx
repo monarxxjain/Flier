@@ -4,37 +4,31 @@ import { addflight, removeflight } from '../../redux/flight';
 
 const AirlineFilter = () => {
     const dispatch = useDispatch();
-    const allFlights = useSelector((state) => state.allFlightsArray.allFlightsArray)
-    const flight = useSelector((state) => state.flight.flightArray)
+    const allAirlines = useSelector((state) => state.allFlightsArray.allFlightsArray)
+    const selectedAirline = useSelector((state) => state.flight.flightArray)
+
+    const handleChange = (e) => {
+        if (e.target.checked) {
+            dispatch(addflight(e.target.value));
+        } else {
+            dispatch(removeflight(e.target.value));
+        }
+    }
+
     return (
         <div className="flex flex-col gap-3 flex-1">
             <h3 className="text-xl">Flights Name :</h3>
             <div className="flex flex-col gap-2">
-                {allFlights.map((item, key) => {
+                {allAirlines.map((airline, key) => {
+                    console.log(airline)
                     return (
                         <div key={key} className="flex gap-3">
-                            {flight.includes(item) === true ? (
-                                <input type="checkbox" value={item} id={item + "flight"} checked={true}
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            dispatch(addflight(e.target.value));
-                                        } else {
-                                            dispatch(removeflight(e.target.value));
-                                        }
-                                    }}
-                                />
+                            {selectedAirline.includes(airline) === true ? (
+                                <input type="checkbox" value={airline} id={airline + "flight"} checked={true} onChange={(e) => handleChange(e)} />
                             ) : (
-                                <input type="checkbox" value={item} id={item + "flight"}
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            dispatch(addflight(e.target.value));
-                                        } else {
-                                            dispatch(removeflight(e.target.value));
-                                        }
-                                    }}
-                                />
+                                <input type="checkbox" value={airline} id={airline + "flight"} onChange={(e) => handleChange(e)} />
                             )}
-                            <label htmlFor={item + "flight"}>{item}</label>
+                            <label htmlFor={airline + "flight"}>{airline}</label>
                         </div>
                     );
                 })}
