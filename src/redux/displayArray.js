@@ -39,6 +39,7 @@ tempDestinationFlights.map((item) => {
 const initialState = {
   displayArray: [...initialDisplayArray],
 }
+console.log("this is the display array ",initialDisplayArray);
 
 export const displayArraySlice = createSlice({
   name: 'displayArray',

@@ -9,6 +9,7 @@ export const flightSlice = createSlice({
   initialState,
   reducers: {
     addflight: (state, action) => {
+      console.log('this is addflight');
       state.flightArray=[...state.flightArray,action.payload]
     },
     removeflight: (state, action) => {

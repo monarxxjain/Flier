@@ -9,6 +9,7 @@ export const brandSlice = createSlice({
   initialState,
   reducers: {
     addBrand: (state, action) => {
+      console.log('brand is used');
       state.brandArray=[...state.brandArray,action.payload]
     },
     removeBrand: (state, action) => {
