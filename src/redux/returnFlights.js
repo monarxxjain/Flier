@@ -1,17 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import X from "../data1.json";
-const departureFrom = X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Departure;
-const arrivalTo = X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Arrival;
-const alldata = X.CatalogProductOfferingsResponse;
-
-const actualReturns = [];
-alldata.CatalogProductOfferings.CatalogProductOffering.forEach((item) => {
-  if (departureFrom == item.Arrival && arrivalTo == item.Departure) {
-    actualReturns.push(item);
-  }
-});
 const initialState = {
-  returnFlightsArray: [...actualReturns],
+  returnFlightsArray: [],
 }
 
 export const returnFlightsArraySlice = createSlice({

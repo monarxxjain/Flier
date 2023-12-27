@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import X from "../data1.json";
 import { Link } from "react-router-dom";
 import Filters from "./Filters/Filters";
 import AllOffering from "./Offerings/AllOffering";
@@ -9,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Flight = () => {
   const dispatch = useDispatch();
   
-  const alldata = X.CatalogProductOfferingsResponse;
+  const alldata = useSelector((state) => state.allData.allDataArray)
   const displayArray = useSelector((state) => state.displayArray.displayArray)
   const brand = useSelector((state) => state.brand.brandArray)
   const flight = useSelector((state) => state.flight.flightArray)

@@ -10,7 +10,6 @@ const AllOffering = ({  showDetails, openAccordian}) => {
   const alldata = X.CatalogProductOfferingsResponse;
   const returnOfferingsList = useSelector((state) => state.finalArrayDup.finalArrayDup);
   const departureOfferingsList = useSelector((state) => state.finalArray.finalArray);
-  console.log(departureOfferingsList)
   return (
     <div className="flex flex-col gap-4 my-10">
       {departureOfferingsList.map((deptOffering, id) => {

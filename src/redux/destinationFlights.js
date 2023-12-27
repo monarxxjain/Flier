@@ -1,23 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
-import X from "../data1.json";
-const departureFrom = X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Departure;
-const arrivalTo = X.CatalogProductOfferingsResponse.CatalogProductOfferings.CatalogProductOffering[0].Arrival;
-const alldata = X.CatalogProductOfferingsResponse;
 
-const actualDestinations = [];
-alldata.CatalogProductOfferings.CatalogProductOffering.forEach((item) => {
-  if (departureFrom == item.Departure && arrivalTo == item.Arrival) {
-    actualDestinations.push(item);
-  }
-});
 const initialState = {
-  destinationFlightsArray: [...actualDestinations],
+  destinationFlightsArray: [],
 }
 
 export const destinationFlightsSlice = createSlice({
   name: 'destinationFlights',
   initialState,
   reducers: {
+    addDestinations: (state, action) => {
+      state.destinationFlightsArray = [...action.payload]
+    },
     addFlight: (state, action) => {
       state.destinationFlightsArray = [...state.destinationFlightsArray, action.payload]
     },
@@ -25,6 +18,6 @@ export const destinationFlightsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addFlight } = destinationFlightsSlice.actions
+export const { addDestinations,addFlight } = destinationFlightsSlice.actions
 
 export default destinationFlightsSlice.reducer
